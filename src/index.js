@@ -3,25 +3,30 @@ module.exports = function getZerosCount(number, base) {
 	let zerosCount = getArrayZeros(simpleFactors);
 
 	function getSimpleFactors (base) {
-		let factors = [];
+        let factors = {};
+        let arrayFactors = [];
 		let simple = 2;
 		let countPower = 0;
 		while (simple<=base) {
 			if (base%simple === 0) {
-		    	if (factors.indexOf(simple) === -1) {
-			    	factors.push(simple);
+		    	if (factors[simple] === undefined) {
+			    	factors[simple] = 0;
 			    }
 			    base /= simple;
 	    		countPower++;
 				if (base%simple !== 0) {
-					factors.push(countPower);
+					factors[simple] = countPower;
 				}	
 			} else {
 				simple++;
 				countPower = 0;
 			}
 		}
-		return factors;
+		for (key in factors) {
+            arrayFactors.push(+key);
+            arrayFactors.push(factors[key]);
+        }
+        return arrayFactors;
 	}
 
 	function getArrayZeros (simpleFactors) {
